@@ -15,11 +15,11 @@ $CFG->dboptions = array (
   'dbpersist' => 0,
   'dbport' => '',
   'dbsocket' => '',
-  'dbcollation' => 'utf8mb4_unicode_ci',
+  'dbcollation' => 'utf8mb4_general_ci',
 );
 
 $CFG->wwwroot   = 'http://localhost/moodle-4.0.1';
-$CFG->dataroot  = 'C:\\xampp7-4\\moodledata';
+$CFG->dataroot  = 'D:\\xampp\\moodledata';
 $CFG->admin     = 'admin';
 
 $CFG->directorypermissions = 0777;
