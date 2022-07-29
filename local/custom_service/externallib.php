@@ -7,30 +7,30 @@ require_once($CFG->dirroot.'/user/lib.php');
 require_once($CFG->dirroot.'/course/lib.php');
 
 class local_custom_service_external extends external_api {
-
-    public static function get_user_parameters() {
+    public static function get_count_parameters() {
         return new external_function_parameters(
             array(
-                'userid' => new external_value(PARAM_TEXT, 'User Id')                
+                //'countid' => new external_value(PARAM_TEXT, 'User Id')                
             )
         );
     }
-    public static function get_user($userid) {
+    public static function get_count() {
         global $DB,$CFG;
 
-        $user = $DB->get_record('user', ['id' => $userid]);
+        $Coursecount = $DB->get_record_sql("SELECT COUNT(*) as count FROM {course} WHERE id>1 AND visible=1");
+        $Usercount = $DB->get_record_sql("SELECT COUNT(*) as count FROM {user} where id>2 AND deleted=0 AND suspended=0");
         
-        $lti_updated = [
-                        'firstname'=>$user->firstname,
-                        'lastname'=>$user->lastname
+        $data = [
+                        'CourseCount'=>$Coursecount->count,
+                        'UserCount'=>$Usercount->count
                         ];
-        return $lti_updated;
+        return $data;
     }
-    public static function get_user_returns() {
+    public static function get_count_returns() {
         return new external_single_structure(
                 array(
-                    'firstname' => new external_value(PARAM_TEXT, 'First Name'),
-                    'lastname'=> new external_value(PARAM_TEXT, 'Last Name')
+                    'CourseCount' => new external_value(PARAM_TEXT, 'Course Count'),
+                    'UserCount' => new external_value(PARAM_TEXT, 'User Count')
                 )
             );
     }
